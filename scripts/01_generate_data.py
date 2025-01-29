@@ -1,17 +1,22 @@
-# 01_generate_data.py
-# Simulate the Coupon Collector's Problem and generate raw data
+import numpy as np
+import pandas as pd
+import random
 
-# Import necessary libraries (numpy, pandas, random)
-# Define a function `simulate_coupon_collection(n, num_trials)`
-#   - n: number of unique coupons
-#   - num_trials: number of simulations
-#   - Output: DataFrame with collected coupons for each trial
+def simulate_coupon_collection(n, num_trials):
+    results = []
+    
+    for _ in range(num_trials):
+        collected = set()
+        draws = 0
+        
+        while len(collected) < n:
+            collected.add(random.randint(1, n))
+            draws += 1
+        
+        results.append(draws)
 
-#   For each trial:
-#       - Initialize a set to track collected coupons
-#       - Keep drawing random coupons until all `n` are collected
-#       - Record the number of draws required
+    df = pd.DataFrame({"trial": range(1, num_trials + 1), "draws_needed": results})
+    df.to_csv("outputs/simulation_data.csv", index=False)
 
-#   Convert results into a DataFrame and save to `outputs/simulation_data.csv`
-
-# If script is run as main, execute the simulation with default parameters
+if __name__ == "__main__":
+    simulate_coupon_collection(n=50, num_trials=10000)
