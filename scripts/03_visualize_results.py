@@ -1,9 +1,19 @@
-# 03_visualize_results.py
-# Generate visualizations of CCP results
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Import matplotlib, seaborn, pandas
-# Read `outputs/simulation_data.csv`
-# Create:
-#   - Histogram of draws needed
-#   - Boxplot of draws needed
-# Save plots to `outputs/visualizations/`
+def visualize_results():
+    df = pd.read_csv("outputs/simulation_data.csv")
+
+    plt.figure(figsize=(8, 5))
+    sns.histplot(df["draws_needed"], bins=30, kde=True)
+    plt.title("Distribution of Draws Needed")
+    plt.savefig("outputs/visualizations/histogram.png")
+    
+    plt.figure(figsize=(6, 4))
+    sns.boxplot(x=df["draws_needed"])
+    plt.title("Boxplot of Draws Needed")
+    plt.savefig("outputs/visualizations/boxplot.png")
+
+if __name__ == "__main__":
+    visualize_results()
